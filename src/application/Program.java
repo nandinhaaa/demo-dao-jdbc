@@ -10,6 +10,7 @@ public class Program {
 		 
 		SellerDao sellerDao = DaoFactory.createSellerDao(); //dessa forma o meu prog conhece somente a interface
 		
+		System.out.println("=== TEST 1: seller findById===");
 		Seller seller = sellerDao.findById(3);
 		
 		System.out.println(seller);

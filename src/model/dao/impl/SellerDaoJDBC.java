@@ -57,17 +57,9 @@ public class SellerDaoJDBC implements SellerDao {
 					//obj associados/ instanciados em memória
 					//apenas na pos 1 tem itens por isso do if abaixo 
 					if(rs.next()) {
-						Department dep = new Department();
-						dep.setId(rs.getInt("DepartmentId"));
-						dep.setName(rs.getString("DepName"));
+						Department dep = instantiateDepartment(rs);
 						//com isso instanciamos um departamento e setamos os valores deles 
-						Seller obj = new Seller();
-						obj.setId(rs.getInt("Id"));
-						obj.setName(rs.getString("Name"));
-						obj.setEmail(rs.getString("Email"));
-						obj.setBaseSalary(rs.getDouble("BaseSalary"));
-						obj.setBirthDate(rs.getDate("BirthDate"));
-						obj.setDepartment(dep);
+						Seller obj = instantiateSeller(rs,dep);
 						return obj; 
 						//met para retornar um vendedor por id. 
 					}
@@ -82,10 +74,28 @@ public class SellerDaoJDBC implements SellerDao {
 		}
 	}
 
+	private Seller instantiateSeller(ResultSet rs, Department dep) throws SQLException {
+		Seller obj=	new Seller();
+			obj.setId(rs.getInt("Id"));
+			obj.setName(rs.getString("Name"));
+			obj.setEmail(rs.getString("Email"));
+			obj.setBaseSalary(rs.getDouble("BaseSalary"));
+			obj.setBirthDate(rs.getDate("BirthDate"));
+			obj.setDepartment(dep);
+			return obj;
+	}//tratamento de erro ja foi feito acima, apenas propaguei a correcao;
+
+	private Department instantiateDepartment(ResultSet rs) throws SQLException {
+		Department dep=  new Department();
+			dep.setId(rs.getInt("DepartmentId"));
+			dep.setName(rs.getString("DepName"));
+			return dep;
+	} //tratamento de erro ja foi feito acima, apenas propaguei a correcao;
+
 	@Override
 	public List<Seller> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	}
 
-}
